@@ -6,6 +6,9 @@
 #         self.right = None
 
 class Codec:
+    def __init__(self):
+        self.nc = 0
+
     def levelOrderTraversal(self, root):
         # l = []
         lst = []
@@ -50,26 +53,29 @@ class Codec:
         """
         print(data)
         queue = []
-        root = TreeNode(data[0])
-        idx = 0
-        none_count = 0
-        queue.append((idx, root))
-        idx += 1
+        x = data.pop(0)
+        if x is None:
+            return
+        root = TreeNode(x)
+        queue.append(root)
         while queue:
             for _ in range(len(queue)):
-                index, node = queue.pop(0)
+                node = queue.pop(0)
                 if node is None:
-                    none_count += 1
                     continue
-                node.left = TreeNode(data[2 * index + 1 - 2 * none_count])
-                node.right = TreeNode(data[index * 2 + 2 - 2 * none_count])
+                if len(data) == 0:
+                    break
+                l = data.pop(0)
+                y = data.pop(0)
 
-                queue.append((idx, node.left))
-                idx += 1
-                queue.append((idx, node.right))
-                idx += 1
-                print(queue)
-        return root
+                if l is not None:
+                    node.left = TreeNode(l)
+                    queue.append(node.left)
+
+                if y is not None:
+                    node.right = TreeNode(y)
+                    queue.append(node.right)
+        return (root)
 
 # Your Codec object will be instantiated and called as such:
 # ser = Codec()
