@@ -6,7 +6,7 @@ class Solution:
         """
         Do not return anything, modify board in-place instead.
         """
-
+        flag = False
         def block(i, j):
             indexes = [(3, 3), (3, 6), (3, 9), (6, 3), (6, 6), (6, 9), (9, 3), (9, 6), (9, 9)]
             for idx, (x, y) in enumerate(indexes):
@@ -32,29 +32,35 @@ class Solution:
                 col_matrix.append([row[i] for row in matrix])
             return col_matrix
 
-        def recursion(board, i, j):
+        def recursion(i, j):
+            nonlocal flag
             if i >= 9 or j >= 9:
-                print(board)
+                # print(board)
+                flag = True
                 return
             elif board[i][j] == ".":
                 for n in range(1, 10):
-                    # print(i, j, n)
                     if isPossible(i, j, str(n)):
                         board[i][j] = str(n)
                         if j == 8:
-                            recursion(board, i + 1, 0)
+                            recursion(i + 1, 0)
+                            if flag:
+                                return
+                            board[i][j] = "."
+
                         else:
-                            recursion(board, i, j + 1)
-                    board[i][j] = "."
+                            recursion(i, j + 1)
+                            if flag:
+                                return
+                            board[i][j] = "."
             else:
                 if j == 8:
-                    recursion(board, i + 1, 0)
+                    recursion(i + 1, 0)
                 else:
-                    recursion(board, i, j + 1)
+                    recursion(i, j + 1)
 
-        recursion(board, 0, 0)
-        return
-        # print(res_board)
+        recursion(0, 0)
+        # print(board)
 
 
 if __name__ == "__main__":
@@ -64,5 +70,7 @@ if __name__ == "__main__":
              [".", "6", ".", ".", ".", ".", "2", "8", "."], [".", ".", ".", "4", "1", "9", ".", ".", "5"],
              [".", ".", ".", ".", "8", ".", ".", "7", "9"]]
     sol = Solution()
-    res_board = sol.solveSudoku(board)
+    sol.solveSudoku(board)
+    print(board)
+
     # print(res_board)
