@@ -25,7 +25,7 @@ class Solution:
             for i in range(1, pointers[3][0] - pointers[0][0]):
                 lst.append(matrix[pointers[3][0] - i][pointers[3][1]])
             if pointers[1][1] - pointers[1][0] <= 1 or pointers[3][0] - pointers[0][0] <= 1:
-                return lst[:n*m]
+                return lst[:n * m]
                 break
             else:
                 pointers[0][0] = pointers[0][0] + 1
@@ -38,9 +38,8 @@ class Solution:
                 pointers[3][1] = pointers[3][1] + 1
 
 
-
 if __name__ == "__main__":
-    matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16],[17,18,19,20]]
+    matrix = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16], [17, 18, 19, 20]]
 
     sol = Solution()
     print(sol.spiralOrder(matrix))
