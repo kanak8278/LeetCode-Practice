@@ -1,7 +1,10 @@
 class Solution:
     def findCLosestElements(self, arr: list[int], k: int, x: int) -> list[int]:
         sorted_arr = sorted(arr, key=lambda num: abs(num + x), reverse=True)
-        return sorted_arr
+        result = []
+        result.extend(sorted_arr[:k])
+        return sorted(result)
+
 
 
 if __name__ == "__main__":
