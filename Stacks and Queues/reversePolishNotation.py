@@ -1,0 +1,16 @@
+class Solution:
+    def evalRPN(self, tokens: List[str]) -> int:
+        stack = []
+
+        def f(a, b, c):
+            if c == "+": return b + a
+            if c == "-": return b - a
+            if c == "*": return b * a
+            if c == "/": return int(b / a)
+
+        for token in tokens:
+            if token in "*/+-":
+                stack.append(f(stack.pop(), stack.pop(), token))
+            else:
+                stack.append(int(token))
+        return stack[-1]
