@@ -4,8 +4,6 @@ from typing import List
 
 class Solution:
     def openLock(self, deadends: List[str], target: str) -> int:
-        visited = set()
-
         def moveUp(s, idx):
             l = list(s)
             if l[idx] == "9":
@@ -22,29 +20,41 @@ class Solution:
                 l[idx] = str(int(l[idx]) - 1)
             return ''.join(l)
 
-        def fn(currentStr, turns):
-            if currentStr == target:
-                return turns
-            if currentStr in deadends:
-                return
-            else:
+        string = '0000'
+        if string in deadends:
+            return -1
+        if string == target:
+            return 0
+        if target in deadends:
+            return -1
+        q = deque()
+        visited = set()
+        q.append(string)
+        visited.add(string)
+        turns = 0
+        while q:
+            turns += 1
+            for x in range(len(q)):
+                string = q.popleft()
                 for idx in range(4):
-                    upString = moveUp(currentStr, idx)
-                    downString = moveDown(currentStr, idx)
+                    upString = moveUp(string, idx)
+                    downString = moveDown(string, idx)
                     if upString == target or downString == target:
-                        return turns+1
+                        return turns
                     if upString not in deadends and upString not in visited:
+                        q.append(upString)
                         visited.add(upString)
-                        fn(upString, turns + 1)
                     if downString not in deadends and downString not in visited:
+                        q.append(downString)
                         visited.add(downString)
-                        fn(downString, turns + 1)
-        return fn('0000', 0)
+
+        return -1
+
 
 if __name__ == "__main__":
-    deadends = ["0201", "0101", "0102", "1212", "2002"]
-    target = "0001"
-    # deadends = ["8887", "8889", "8878", "8898", "8788", "8988", "7888", "9888"]
-    # target = "8888"
+    # deadends = ["0201", "0101", "0102", "1212", "2002"]
+    # target = "0202"
+    deadends = ["8887", "8889", "8878", "8898", "8788", "8988", "7888", "9888"]
+    target = "0009"
     sol = Solution()
     print(sol.openLock(deadends, target))
