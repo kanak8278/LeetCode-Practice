@@ -1,3 +1,4 @@
+# Line 11 q.pop() is DFS and q.popleft() is BFS
 from typing import List
 import collections
 class Solution:
@@ -7,7 +8,7 @@ class Solution:
             q.append((r, c))
             grid[r][c] = -1
             while q:
-                row, col = q.pop()
+                row, col = q.popleft()
                 dirs = [[1, 0], [0, 1], [-1, 0], [0, -1]]
                 for dr, dc in dirs:
                     if row + dr in range(len(grid)) and col + dc in range(len(grid[0])) \
